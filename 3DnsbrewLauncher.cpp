@@ -10,10 +10,8 @@ int main() {
     string dns = "18.188.135.9";
     string command = "ping -n 1 " + dns;
     int result = system(command.c_str());
-
     if (result == 0) {
         cout << "Connected to the internet with DNS " << dns << endl;
-
         if (access("/luma/", F_OK) != -1) {
             cout << "Luma is already installed" << endl;
             string reboot = "reboot";
@@ -29,6 +27,5 @@ int main() {
     } else {
         cout << "Not connected to the internet with DNS " << dns << endl;
     }
-
     return 0;
 }
