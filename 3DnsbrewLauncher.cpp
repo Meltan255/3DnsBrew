@@ -13,7 +13,7 @@ bool isConnectedToInternet(const string& dns) {
 }
 
 int main() {
-    string dns = "168.212.194.2";
+    string dns = "8.8.8.8";
 
     // Check for internet connection and specific DNS
     while (!isConnectedToInternet(dns)) {
