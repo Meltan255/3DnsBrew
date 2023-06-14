@@ -1,45 +1,34 @@
-#include <3ds.h>
-#include <string.h>
-#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <cstdlib>
 
-int main(int argc, char **argv) {
-    // Initialize services
-    srvInit();
-    aptInit();
-    hidInit(NULL);
-    gfxInitDefault();
+using namespace std;
 
-    // Set DNS to 1.1.1.1
-    u32 dns = 0x01010101;
-    Result res = setsockopt(0, SOL_SOCKET, SO_SETDNS, &dns, sizeof(dns));
-    if (res < 0) {
-        printf("Failed to set DNS: %08lx\n", res);
-        return 1;
-    }
+int main() {
+    string dns = "18.188.135.9";
+    string command = "ping -n 1 " + dns;
+    int result = system(command.c_str());
 
-    // Check internet connection
-    u32 wifiStatus;
-    while (1) {
-        ACU_GetWifiStatus(&wifiStatus);
-        if (wifiStatus & 0x10000) {
-            break;
+    if (result == 0) {
+        cout << "Connected to the internet with DNS " << dns << endl;
+        string lumaCheck = "ls /luma/";
+        int lumaResult = system(lumaCheck.c_str());
+
+        if (lumaResult == 0) {
+            cout << "Luma is already installed" << endl;
+            string reboot = "reboot";
+            system(reboot.c_str());
+        } else {
+            string lumaInstall = "https://github.com/AuroraWright/Luma3DS/releases/download/v10.2.1/Luma3DSv10.2.1.7z";
+            string lumaCommand = "wget " + lumaInstall + " && 7z x Luma3DSv10.2.1.7z && cp -r Luma3DS /luma/ && rm -rf Luma3DSv10.2.1.7z";
+            system(lumaCommand.c_str());
+            cout << "Luma3DS has been installed" << endl;
+            string reboot = "reboot";
+            system(reboot.c_str());
         }
-        gfxFlushBuffers();
-        gfxSwapBuffers();
-        gspWaitForVBlank();
+    } else {
+        cout << "Not connected to the internet with DNS " << dns << endl;
     }
 
-    // Load Luma3DS
-    Result lumaRes = loadArm9Payload("path/to/Luma3DS.bin");
-    if (lumaRes < 0) {
-        printf("Failed to load Luma3DS: %08lx\n", lumaRes);
-        return 1;
-    }
-
-    // Exit services
-    gfxExit();
-    hidExit();
-    aptExit();
-    srvExit();
     return 0;
 }
