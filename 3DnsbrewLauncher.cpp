@@ -19,8 +19,8 @@ int main() {
             string reboot = "reboot";
             system(reboot.c_str());
         } else {
-            string lumaInstall = "https://github.com/AuroraWright/Luma3DS/releases/download/v10.2.1/Luma3DSv10.2.1.7z";
-            string lumaCommand = "wget " + lumaInstall + " && 7z x Luma3DSv10.2.1.7z && cp -r Luma3DS /luma/ && rm -rf Luma3DSv10.2.1.7z";
+            string lumaInstall = "https://github.com/LumaTeam/Luma3DS/releases/download/v12.0.1/Luma3DSv12.0.1.zip";
+            string lumaCommand = "wget " + lumaInstall + " && 7z x Luma3DSv12.0.1.zip && cp -r Luma3DS /luma/ && rm -rf Luma3DSv12.0.1.zip";
             system(lumaCommand.c_str());
             cout << "Luma3DS has been installed" << endl;
             string reboot = "reboot";
