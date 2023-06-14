@@ -2,6 +2,7 @@
 #include <string>
 #include <cstdlib>
 #include <unistd.h>
+#include <sys/stat.h>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ int main() {
             system(reboot.c_str());
         } else {
             string lumaInstall = "https://github.com/LumaTeam/Luma3DS/releases/download/v12.0.1/Luma3DSv12.0.1.zip";
-            string lumaCommand = "wget " + lumaInstall + " && unzip Luma3DSv12.0.1.zip && cp -r Luma3DS /luma/ && rm -rf Luma3DSv12.0.1.zip";
+            string lumaCommand = "mkdir /luma/ && curl -L " + lumaInstall + " -o Luma3DSv12.0.1.zip && unzip Luma3DSv12.0.1.zip && cp -r Luma3DS /luma/ && rm -rf Luma3DSv12.0.1.zip";
             system(lumaCommand.c_str());
             cout << "Luma3DS has been installed" << endl;
             string reboot = "reboot";
